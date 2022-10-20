@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SpringbootmongotutorialApplication {
 					address,
 					List.of("Art", "Photography"),
 					BigDecimal.TEN,
-					ZonedDateTime.now()
+					LocalDateTime.now()
 
 			);
 
