@@ -47,9 +47,8 @@ public class SpringbootmongotutorialApplication {
 			//less clean way
 			//usingMongoTemplateAndQuery(repository, template, email, student);
 			repository.findStudentByEmail(email)
-					.ifPresentOrElse(s -> {
-						System.out.printf(s.getEmail() + " already exists");
-					}, () -> {repository.insert(student);});
+					.ifPresentOrElse(s -> System.out.printf(s.getEmail() + " already exists"),
+							() -> repository.insert(student));
 
 		};
 	}
