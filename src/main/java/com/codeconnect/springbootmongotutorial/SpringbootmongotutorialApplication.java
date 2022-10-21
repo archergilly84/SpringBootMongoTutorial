@@ -44,14 +44,23 @@ public class SpringbootmongotutorialApplication {
 
 			);
 
-			Query query = new Query();
-			query.addCriteria(Criteria.where("email").is(email));
-
-			List<Student> students = template.find(query, Student.class);
-			if(students.size() > 1) throw new IllegalStateException("More than one student returned with the email " + email);
-			if (students.isEmpty()) repository.insert(student);
+			//less clean way
+			//usingMongoTemplateAndQuery(repository, template, email, student);
+			repository.findStudentByEmail(email)
+					.ifPresentOrElse(s -> {
+						System.out.printf(s.getEmail() + " already exists");
+					}, () -> {repository.insert(student);});
 
 		};
+	}
+
+	private void usingMongoTemplateAndQuery(StudentRepository repository, MongoTemplate template, String email, Student student) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("email").is(email));
+
+		List<Student> students = template.find(query, Student.class);
+		if(students.size() > 1) throw new IllegalStateException("More than one student returned with the email " + email);
+		if (students.isEmpty()) repository.insert(student);
 	}
 
 }
